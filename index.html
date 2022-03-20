@@ -8,9 +8,9 @@
 <script>
 
 function seeNFTs(wallet_address){
-	
 	var solConnect = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('devnet'), 'confirmed');
-	console.log(solConnect.getTokenAccountsByOwner(wallet_address));
+	var key = new solanaWeb3.PublicKey(wallet_address);
+	console.log(solConnect.getTokenAccountsByOwner(key));
 }
 // Connect Phantom
 function phantom_connect() {

@@ -8,10 +8,35 @@
 <script>
 
 function seeNFTs(wallet_address){
+	/*
 	var solConnect = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('devnet'), 'confirmed');
-	var key = new solanaWeb3.PublicKey(wallet_address);
+	var key = new solanaWeb3.PublicKey(wallet_address, MINTADDRESSTHATIDONTHAVE);
 	console.log(solConnect.getTokenAccountsByOwner(key));
+	*/
+
+	var call = new XMLHttpRequest();
+	call.open("GET", 'https://solana-gateway.moralis.io/account/mainnet/' + wallet_address + '/nft', false);
+	call.setRequestHeader('X-API-Key', "hdjpcFZv2FFYZgim7iDoGSBAXpl7b6511rvTDrNxPXhxuJ9LjgM33EXubaZHQOY5");
+	call.setRequestHeader("accept", "application/json");
+	console.log(call.responseText);
+	
+	var jsonified = JSON.parse(call.responseText);
+	var display = document.getElementById("displayNFTs");
+	for(var x = 0; x < jsonified.length; x++){
+		var associated = jsonified[x].associatedTokenAddress;
+		var mint = jsonified[x].mint;
+		
+		var first = document.createElement("h1");
+		first.innerHTML = associated;
+		display.appendChild(first);
+
+		var second = document.createElement("h1");
+		second.innerHTML = mint;
+		display.appendChild(second);	
+	}	
+	
 }
+
 // Connect Phantom
 function phantom_connect() {
 
@@ -59,5 +84,6 @@ function phantom_connect() {
 </script>
 <button onclick = "phantom_connect()"> Connect Phantom Wallet </button>
 <h1 id = "displayAddress"> </h1>
+<div id = "displayNFTs"> </div>s
 </body>
 </html>

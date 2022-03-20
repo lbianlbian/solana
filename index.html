@@ -3,8 +3,9 @@
 <title> Connect phantom wallet </title>
 </head>
 <body>
+<script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+
 <script>
-	//https://stackoverflow.com/questions/69609838/how-to-get-solana-account-info-and-or-sol-balance-using-vanilla-js-and-json-rpc
 // Connect Phantom
 function phantom_connect() {
 
@@ -47,6 +48,9 @@ function phantom_connect() {
         console.log("Connection Cancelled!");
     }
   }
+console.log(wallet_address);
+var solConnect = new web3.Connection(web3.clusterApiUrl('devnet'), 'confirmed');
+console.log(solConnect.getTokenAccountsByOwner(wallet_address);
 }
 
 </script>

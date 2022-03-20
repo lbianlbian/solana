@@ -8,6 +8,7 @@
 <script>
 
 function seeNFTs(wallet_address){
+	const web3 = require("@solana/web3.js");
 	var solConnect = new web3.Connection(web3.clusterApiUrl('devnet'), 'confirmed');
 	console.log(solConnect.getTokenAccountsByOwner(wallet_address));
 }

@@ -1,0 +1,80 @@
+<html>
+<head> 
+<title> Send sol </title>
+</head>
+<body>
+<script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+<script>
+var globalKey;
+var globalProvider;
+
+function phantom_connect() {
+
+  // Check for Solana & Phantom
+  var provider = () => {
+    if ("solana" in window) {
+      var provider = window.solana;
+	globalProvider = provider;
+      if (provider.isPhantom) {
+        return provider;
+      } else {
+        return false;
+      }
+    }
+    window.open("https://phantom.app", "_blank");
+  };
+
+  var phantom = provider();
+
+  if (phantom !== false) {
+
+    console.log("Phantom Wallet Found, Connecting..");
+
+    try {
+
+      // Connect to Solana
+      var connect_wallet = phantom.connect();
+
+      // After Connecting
+      phantom.on("connect", () => {
+
+        // Check Connection
+        console.log("Phantom Connected: " + phantom.isConnected);
+
+        // Get Wallet Address
+        var wallet_address = phantom.publicKey.toString();
+	document.getElementById("displayAddress").innerHTML = wallet_address;
+	globalKey = phantom.publicKey;
+	
+     });
+     } catch (err) {
+        console.log("Connection Cancelled!");
+    }
+  }
+}
+
+async function send(){
+	var recieverWallet = new solanaWeb3.PublicKey("B73uwarpYM72sZDJJjd8ALQaCHGB37BPRiaaiXPdNHvG");
+	var senderWallet = new solanaWeb3.PublicKey("6gHtRckgbXmRtXkkCx5vhAh9jBUC3AuXTgmhi9gMHMVM")
+	var solConnect = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('devnet'), 'confirmed');
+	var transaction = new solanaWeb3.Transaction().add(
+      		solanaWeb3.SystemProgram.transfer({
+        		fromPubkey: globalKey,
+        		toPubkey: recieverWallet,
+        		lamports:  500000000  //Investing 1 SOL. Remember 1 Lamport = 10^-9 SOL.
+      		}),
+    	);
+	if(transaction){
+		console.log("transaction is successful success");
+	}
+	var signature = await globalProvider.signTransaction(transaction);
+	var transfer = await solanaWeb3.sendAndConfirmTransaction(solConnect, transaction, signature);
+	console.log(transfer);
+}
+
+</script>
+<button onclick  = "phantom_connect()"> Click here to connect </button>
+<h1 id = "displayAddress"> </h1>
+<button onclick = "send()"> Click here to send sol </button>
+</body>
+</html>

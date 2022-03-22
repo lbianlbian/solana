@@ -69,9 +69,14 @@ async function send(){
 	let blockhashObj = await solConnect.getRecentBlockhash();
     	transaction.recentBlockhash = await blockhashObj.blockhash;
 
-	var signature = await globalProvider.signTransaction(transaction);
-	var transfer = await solanaWeb3.sendAndConfirmTransaction(solConnect, transaction, [signature]);
-	console.log(transfer);
+	 // Request creator to sign the transaction (allow the transaction)
+    	let signed = await globalProvider.signTransaction(transaction);
+    	// The signature is generated
+    	let signature = await solConnect.sendRawTransaction(signed.serialize());
+    	// Confirm whether the transaction went through or not
+    	await solConnect.confirmTransaction(signature);
+
+	    console.log("Signature: ", signature);
 }
 
 </script>

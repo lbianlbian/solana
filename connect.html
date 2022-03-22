@@ -64,9 +64,11 @@ async function send(){
         		lamports:  500000000  //Investing 1 SOL. Remember 1 Lamport = 10^-9 SOL.
       		}),
     	);
-	if(transaction){
-		console.log("transaction is successful success");
-	}
+	
+	transaction.feePayer = globalKey;
+	let blockhashObj = await solConnect.getRecentBlockhash();
+    	transaction.recentBlockhash = await blockhashObj.blockhash;
+
 	var signature = await globalProvider.signTransaction(transaction);
 	var transfer = await solanaWeb3.sendAndConfirmTransaction(solConnect, transaction, signature);
 	console.log(transfer);

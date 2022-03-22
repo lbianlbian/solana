@@ -70,7 +70,7 @@ async function send(){
     	transaction.recentBlockhash = await blockhashObj.blockhash;
 
 	var signature = await globalProvider.signTransaction(transaction);
-	var transfer = await solanaWeb3.sendAndConfirmTransaction(solConnect, transaction, signature);
+	var transfer = await solanaWeb3.sendAndConfirmTransaction(solConnect, transaction, [signature]);
 	console.log(transfer);
 }
 

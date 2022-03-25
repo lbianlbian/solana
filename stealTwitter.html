@@ -9,8 +9,7 @@ async function getData(){
 var connect = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl("devnet"), "confirmed");
 var solTwitter = new solanaWeb3.PublicKey("BNDCEb5uXCuWDxJW9BGmbfvR1JBMAKckfhYrEKW2Bv1W");
 var response = await connect.getProgramAccounts(solTwitter);
-console.log(response);
-  console.log(response[0].pubkey);
+  console.log(response[0].pubkey.toBase58());
 } 
 </script>
 <button onclick = "getData()"> Click here  </button>

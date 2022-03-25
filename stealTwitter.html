@@ -5,10 +5,13 @@
 <body>
 <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
 <script>
+async function getData(){
 var connect = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl("devnet"), "confirmed");
 var solTwitter = new solanaWeb3.PublicKey("BNDCEb5uXCuWDxJW9BGmbfvR1JBMAKckfhYrEKW2Bv1W");
-var response = connect.getProgramAccounts(solTwitter);
-console.log(response); 
+var response = await connect.getProgramAccounts(solTwitter);
+console.log(response);
+} 
 </script>
+<button onclick = "getData()"> Click here  </button>
 </body>
 </html>

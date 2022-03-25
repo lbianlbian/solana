@@ -7,7 +7,7 @@
 <script>
 var connect = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl("devnet"), "confirmed");
 var solTwitter = new solanaWeb3.PublicKey("BNDCEb5uXCuWDxJW9BGmbfvR1JBMAKckfhYrEKW2Bv1W");
-var response = await connect.getProgramAccounts(solTwitter);
+var response = connect.getProgramAccounts(solTwitter);
 console.log(response); 
 </script>
 </body>

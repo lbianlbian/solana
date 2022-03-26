@@ -1,0 +1,56 @@
+<html>
+<head>
+<title> delete tweet </title>
+</head>
+<body>
+<script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+<script>
+function phantom_connect() {
+
+  // Check for Solana & Phantom
+  var provider = () => {
+    if ("solana" in window) {
+      var provider = window.solana;
+	globalProvider = provider;
+      if (provider.isPhantom) {
+        return provider;
+      } else {
+        return false;
+      }
+    }
+    window.open("https://phantom.app", "_blank");
+  };
+
+  var phantom = provider();
+
+  if (phantom !== false) {
+
+    console.log("Phantom Wallet Found, Connecting..");
+
+    try {
+
+      // Connect to Solana
+      var connect_wallet = phantom.connect();
+
+      // After Connecting
+      phantom.on("connect", () => {
+
+        // Check Connection
+        console.log("Phantom Connected: " + phantom.isConnected);
+
+        // Get Wallet Address
+        var wallet_address = phantom.publicKey.toString();
+	document.getElementById("displayAddress").innerHTML = wallet_address;
+	globalKey = phantom.publicKey;
+	
+     });
+     } catch (err) {
+        console.log("Connection Cancelled!");
+    }
+  }
+}
+</script>
+
+<button onclick = "phantom_connect()"> Connect to phantom wallet </button>
+</body>
+</html>

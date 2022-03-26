@@ -64,15 +64,15 @@ async function deleteTweet(){
     	);
 
 	transaction.feePayer = globalKey;
-	let blockhashObj = await solConnect.getRecentBlockhash();
+	let blockhashObj = await connect.getRecentBlockhash();
     	transaction.recentBlockhash = await blockhashObj.blockhash;
 
 	 // Request creator to sign the transaction (allow the transaction)
     	let signed = await globalProvider.signTransaction(transaction);
     	// The signature is generated
-    	let signature = await solConnect.sendRawTransaction(signed.serialize());
+    	let signature = await connect.sendRawTransaction(signed.serialize());
     	// Confirm whether the transaction went through or not
-    	await solConnect.confirmTransaction(signature);
+    	await connect.confirmTransaction(signature);
 
 	console.log("Signature: ", signature);
 }

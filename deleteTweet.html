@@ -5,6 +5,8 @@
 <body>
 <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
 <script>
+var globalKey;
+var globalProvider;
 function phantom_connect() {
 
   // Check for Solana & Phantom
@@ -49,8 +51,35 @@ function phantom_connect() {
     }
   }
 }
+
+function deleteTweet(){
+	var connect = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl("devnet"), "confirmed");
+	var tweetAcc = new solanaWeb3.PublicKey("J4nMLFuSGeMvQEAdwm7i9e8d3SpbYGg1wRguFvHYu8aN");
+	var transaction = new solanaWeb3.Transaction().add(
+      		solanaWeb3.SystemProgram.transfer({
+        		fromPubkey: tweetAcc,
+        		toPubkey: globalKey,
+        		lamports:  500000000  //Remember 1 Lamport = 10^-9 SOL.
+      		}),
+    	);
+
+	transaction.feePayer = globalKey;
+	let blockhashObj = await solConnect.getRecentBlockhash();
+    	transaction.recentBlockhash = await blockhashObj.blockhash;
+
+	 // Request creator to sign the transaction (allow the transaction)
+    	let signed = await globalProvider.signTransaction(transaction);
+    	// The signature is generated
+    	let signature = await solConnect.sendRawTransaction(signed.serialize());
+    	// Confirm whether the transaction went through or not
+    	await solConnect.confirmTransaction(signature);
+
+	console.log("Signature: ", signature);
+}
+
 </script>
 
 <button onclick = "phantom_connect()"> Connect to phantom wallet </button>
+	<button onclick = "deleteTweet()"> Delete tweet </button>
 </body>
 </html>

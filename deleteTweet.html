@@ -52,7 +52,7 @@ function phantom_connect() {
   }
 }
 
-function deleteTweet(){
+async function deleteTweet(){
 	var connect = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl("devnet"), "confirmed");
 	var tweetAcc = new solanaWeb3.PublicKey("J4nMLFuSGeMvQEAdwm7i9e8d3SpbYGg1wRguFvHYu8aN");
 	var transaction = new solanaWeb3.Transaction().add(

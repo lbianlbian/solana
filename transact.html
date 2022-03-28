@@ -1,0 +1,78 @@
+<html>
+<head>
+<title> Sending transaction to helloworld program </title>
+</head>
+<body> 
+<script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+<script type = "text/javascript" src = "https://unpkg.com/borsh@0.7.0/"> </script>
+<script>
+var globalKey;
+var globalProvider;
+var programID = new solanaWeb3.PublicKey("B4XVt1zg2fPppvcBegRh1SKPB33vuiKF5pXpu8Uj9N24");
+var connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl("devnet"), "confirmed");
+
+// Connect Phantom
+function phantom_connect() {
+
+  // Check for Solana & Phantom
+  var provider = () => {
+    if ("solana" in window) {
+      var provider = window.solana;
+	globalProvider = provider;
+      if (provider.isPhantom) {
+        return provider;
+      } else {
+        return false;
+      }
+    }
+    window.open("https://phantom.app", "_blank");
+  };
+
+  var phantom = provider();
+
+  if (phantom !== false) {
+
+    console.log("Phantom Wallet Found, Connecting..");
+
+    try {
+
+      // Connect to Solana
+      var connect_wallet = phantom.connect();
+
+      // After Connecting
+      phantom.on("connect", () => {
+
+        // Check Connection
+        console.log("Phantom Connected: " + phantom.isConnected);
+
+        // Get Wallet Address
+        var wallet_address = phantom.publicKey.toString();
+	document.getElementById("displayAddress").innerHTML = wallet_address;
+	globalKey = phantom.publicKey;
+     });
+     } catch (err) {
+        console.log("Connection Cancelled!");
+    }
+  }
+}
+
+async function createAcc(){
+	var seed = document.getElementById("seed");
+	var newAcc = await solanaWeb3.PublicKey.createWithSeed(globalKey, seed, programID); //might have to initialize blank PublicKey first
+	var newAccData = await connection.getAccountInfo(newAcc);
+	if(newAccData != null){ //this means account somehow already has data
+		return;
+	}
+	//var rentExemptVal = await connection.getMinimumBalanceForRentExemption(
+	
+}
+
+</script>
+<h1 id = "displayAddress"> Address here </h1>
+<button onclick = "phantom_connect()"> Connect to Phantom </button>
+<br>
+<h2> Enter account seed here </h2>
+<input type = "text" id = "seed" value = "blah"> 
+<button onclick = "createAcc()"> Create a new account to store hellos </button>
+</body>
+</html>

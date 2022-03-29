@@ -79,7 +79,7 @@ async function createAcc(){
 	}
 	var rentExemptVal = await connection.getMinimumBalanceForRentExemption(greetingSize);
 	
-	var transaction = new solanaweb3.Transaction().add(
+	var transaction = new solanaWeb3.Transaction().add(
 		solanaWeb3.SystemProgram.createAccountWithSeed({
 			fromPubkey: globalKey,
 			basePubkey: globalKey,

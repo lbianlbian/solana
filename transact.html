@@ -22,6 +22,7 @@ class GreetingAccount{
 const greetingSchema = new Map([[GreetingAccount, {kind: 'struct', fields: [['counter', 'u32']]}], ]);
 const greetingSize = borsh.serialize(greetingSchema, new GreetingAccount(),).length;
 
+var createdAcc;
 
 // Connect Phantom
 function phantom_connect() {
@@ -70,7 +71,8 @@ function phantom_connect() {
 
 async function createAcc(){
 	var greetingSeed = document.getElementById("seed");
-	var newAcc = await solanaWeb3.PublicKey.createWithSeed(globalKey.toBase58(), greetingSeed, programID); //might have to initialize blank PublicKey first
+	var newAcc = await solanaWeb3.PublicKey.createWithSeed(globalKey, greetingSeed, programID); //might have to initialize blank PublicKey first
+	createdAcc = newAcc;
 	var newAccData = await connection.getAccountInfo(newAcc);
 	if(newAccData != null){ //this means account somehow already has data
 		return;
@@ -93,6 +95,9 @@ async function createAcc(){
 
 }
 
+async function sayHello(){
+}
+
 </script>
 <h1 id = "displayAddress"> Address here </h1>
 <button onclick = "phantom_connect()"> Connect to Phantom </button>
@@ -100,5 +105,8 @@ async function createAcc(){
 <h2> Enter account seed here </h2>
 <input type = "text" id = "seed" value = "blah"> 
 <button onclick = "createAcc()"> Create a new account to store hellos </button>
+<br>
+<br>
+<button onclick = "sayHello()"> Say hello to account </button>
 </body>
 </html>

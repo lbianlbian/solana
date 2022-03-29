@@ -96,6 +96,17 @@ async function createAcc(){
 }
 
 async function sayHello(){
+	const instruction = new TransactionInstruction({
+		keys: [{pubkey: createdAcc, isSigner: false, isWritable: true}],
+		programID,
+		data: Buffer.alloc(0),
+	});
+
+	await sendAndConfirmTransaction(
+		connection,
+		new Transaction().add(instruction),
+		[globalProvider],
+	);
 }
 
 </script>

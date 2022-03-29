@@ -5,13 +5,23 @@
 <body> 
 <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
 <script> var exports = {}; </script>
-<script src = "https://unpkg.com/borsh@0.7.0/lib/index.d.ts"> </script>
-<script src = "https://unpkg.com/borsh@0.7.0/lib/index.js"> </script>
+<script src = "borsh.js"> </script>
 <script>
 var globalKey;
 var globalProvider;
 var programID = new solanaWeb3.PublicKey("B4XVt1zg2fPppvcBegRh1SKPB33vuiKF5pXpu8Uj9N24");
 var connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl("devnet"), "confirmed");
+
+//borsh stuff below
+class GreetingAccount{
+	counter = 0;
+	constructor(counter){
+		this.counter = counter;
+	}
+}
+const greetingSchema = new Map([[GreetingAccount, {kind: 'struct', fields: [['counter', 'u32']]}], ]);
+const greetingSize = borsh.serialize(greetingSchema, new GreetingAccount(),).length;
+
 
 // Connect Phantom
 function phantom_connect() {
@@ -59,14 +69,28 @@ function phantom_connect() {
 }
 
 async function createAcc(){
-	var seed = document.getElementById("seed");
-	var newAcc = await solanaWeb3.PublicKey.createWithSeed(globalKey, seed, programID); //might have to initialize blank PublicKey first
+	var greetingSeed = document.getElementById("seed");
+	var newAcc = await solanaWeb3.PublicKey.createWithSeed(globalKey, greetingSeed, programID); //might have to initialize blank PublicKey first
 	var newAccData = await connection.getAccountInfo(newAcc);
 	if(newAccData != null){ //this means account somehow already has data
 		return;
 	}
-	//var rentExemptVal = await connection.getMinimumBalanceForRentExemption(
+	var rentExemptVal = await connection.getMinimumBalanceForRentExemption(greetingSize);
 	
+	var transaction = new Transaction().add(
+		SystemProgram.createAccountWithSeed({
+			fromPubkey: globalKey,
+			basePubkey: globalKey,
+			seed: greetingSeed,
+			newAccountPubkey: newAcc,
+			lamports,
+			space: greetingSize,
+			programID,
+		}),
+	);
+
+	await sendAndConfirmTransaction(connection, transaction, [globalProvider]);
+
 }
 
 </script>

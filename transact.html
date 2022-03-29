@@ -79,8 +79,8 @@ async function createAcc(){
 	}
 	var rentExemptVal = await connection.getMinimumBalanceForRentExemption(greetingSize);
 	
-	var transaction = new Transaction().add(
-		SystemProgram.createAccountWithSeed({
+	var transaction = new solanaweb3.Transaction().add(
+		solanaWeb3.SystemProgram.createAccountWithSeed({
 			fromPubkey: globalKey,
 			basePubkey: globalKey,
 			seed: greetingSeed,
@@ -91,18 +91,18 @@ async function createAcc(){
 		}),
 	);
 
-	await sendAndConfirmTransaction(connection, transaction, [globalProvider]);
+	await connection.sendAndConfirmTransaction(connection, transaction, [globalProvider]);
 
 }
 
 async function sayHello(){
-	const instruction = new TransactionInstruction({
+	const instruction = new solanaWeb3.TransactionInstruction({
 		keys: [{pubkey: createdAcc, isSigner: false, isWritable: true}],
 		programID,
 		data: Buffer.alloc(0),
 	});
 
-	await sendAndConfirmTransaction(
+	await connection.sendAndConfirmTransaction(
 		connection,
 		new Transaction().add(instruction),
 		[globalProvider],

@@ -71,7 +71,7 @@ function phantom_connect() {
 
 async function createAcc(){
 	var greetingSeed = document.getElementById("seed");
-	var newAcc = await solanaWeb3.PublicKey.createWithSeed(globalKey, greetingSeed, programID); //might have to initialize blank PublicKey first
+	var newAcc = await solanaWeb3.PublicKey.createProgramAddress(globalKey.toBuffer(), programID); //might have to initialize blank PublicKey first
 	createdAcc = newAcc;
 	var newAccData = await connection.getAccountInfo(newAcc);
 	if(newAccData != null){ //this means account somehow already has data

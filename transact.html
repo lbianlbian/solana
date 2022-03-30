@@ -6,6 +6,7 @@
 <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
 <script> var exports = {}; </script>
 <script src = "borsh.js"> </script>
+<script src = "base58.js"> </script>
 <script>
 var globalKey;
 var globalProvider;
@@ -97,7 +98,7 @@ async function createAcc(){
 	var signed = await globalProvider.signTransaction(transaction);
 	var signature = await connection.sendRawTransaction(signed.serialize());
 	
-	await connection.confirmTransaction();
+	await connection.confirmTransaction(signature);
 
 }
 

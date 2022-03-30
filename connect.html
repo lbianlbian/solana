@@ -4,6 +4,7 @@
 </head>
 <body>
 <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+<script src = "base58.js"> </script>
 <script>
 var globalKey;
 var globalProvider;
@@ -53,6 +54,8 @@ function phantom_connect() {
   }
 }
 
+//https://stackoverflow.com/questions/69546971/how-to-properly-transfer-solana-sol-using-web3js-via-phantom
+
 async function send(){
 	var recieverWallet = new solanaWeb3.PublicKey("B73uwarpYM72sZDJJjd8ALQaCHGB37BPRiaaiXPdNHvG");
 	var senderWallet = new solanaWeb3.PublicKey("6gHtRckgbXmRtXkkCx5vhAh9jBUC3AuXTgmhi9gMHMVM")
@@ -61,7 +64,7 @@ async function send(){
       		solanaWeb3.SystemProgram.transfer({
         		fromPubkey: globalKey,
         		toPubkey: recieverWallet,
-        		lamports:  500000000  //Investing 1 SOL. Remember 1 Lamport = 10^-9 SOL.
+        		lamports:  500000000  //Remember 1 Lamport = 10^-9 SOL.
       		}),
     	);
 	
@@ -74,6 +77,7 @@ async function send(){
     	// The signature is generated
     	let signature = await solConnect.sendRawTransaction(signed.serialize());
     	// Confirm whether the transaction went through or not
+	signature = bs58.encode(signature);
     	await solConnect.confirmTransaction(signature);
 
 	    console.log("Signature: ", signature);

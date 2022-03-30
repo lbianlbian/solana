@@ -91,8 +91,11 @@ async function createAcc(){
 			programId: programID,
 		}),
 	);
-
-	await connection.sendTransaction(transaction, [globalProvider]);
+	
+	var signed = await globalprovider.signTransaction(transaction);
+	var signature = await connection.sendRawTransaction(signed.serialize());
+	
+	await connection.confirmTransaction();
 
 }
 
@@ -113,6 +116,13 @@ async function seeHellos(){
 	var checkAccStr = document.getElementById("checkAcc").value;
 	var checkAcc = new solanaWeb3.PublicKey(checkAccStr);
 	var accInfo = await connection.getAccountInfo(checkAcc);
+	const greeting = borsh.deserialize(
+		greetingSchema,
+		greetingAccount,
+		accInfo.data,
+	);
+
+	console.log(checkAccStr + " has been greated " + greeting.counter + " times.");
 	
 }
 </script>

@@ -107,7 +107,7 @@ async function sayHello(){
 	const instruction = new solanaWeb3.TransactionInstruction({
 		keys: [{pubkey: createdAcc, isSigner: false, isWritable: true}],
 		programID,
-		data: Buffer.alloc(0),
+		data: buffer.Buffer.alloc(0),
 	});
 
 	var transaction = new solanaWeb3.Transaction();

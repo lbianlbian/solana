@@ -106,7 +106,7 @@ async function createAcc(){
 async function sayHello(){
 	const instruction = new solanaWeb3.TransactionInstruction({
 		keys: [{pubkey: createdAcc, isSigner: false, isWritable: true}],
-		programID,
+		porgramId: programID,
 		data: buffer.Buffer.alloc(0),
 	});
 

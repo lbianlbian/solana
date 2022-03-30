@@ -126,7 +126,7 @@ async function seeHellos(){
 	var accInfo = await connection.getAccountInfo(checkAcc);
 	const greeting = borsh.deserialize(
 		greetingSchema,
-		greetingAccount,
+		GreetingAccount,
 		accInfo.data,
 	);
 

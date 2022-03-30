@@ -75,6 +75,7 @@ async function createAcc(){
 	createdAcc = newAcc;
 	var newAccData = await connection.getAccountInfo(newAcc);
 	if(newAccData != null){ //this means account somehow already has data
+		createdAcc = newAcc;
 		return;
 	}
 	var rentExemptVal = await connection.getMinimumBalanceForRentExemption(greetingSize);
@@ -85,9 +86,9 @@ async function createAcc(){
 			basePubkey: globalKey,
 			seed: greetingSeed,
 			newAccountPubkey: newAcc,
-			rentExemptVal,
+			lamports: rentExemptVal,
 			space: greetingSize,
-			programID,
+			programId: programID,
 		}),
 	);
 
@@ -109,6 +110,11 @@ async function sayHello(){
 	);
 }
 
+async function seeHellos(){
+
+	
+	
+}
 </script>
 <h1 id = "displayAddress"> Address here </h1>
 <button onclick = "phantom_connect()"> Connect to Phantom </button>
@@ -119,5 +125,10 @@ async function sayHello(){
 <br>
 <br>
 <button onclick = "sayHello()"> Say hello to account </button>
+<br>
+<br>
+<h1> See number of times an account has been greeted </h1>
+<input type = "text" id = "checkAcc"> 
+<button onclick = "seeHellos()"> Check </button>
 </body>
 </html>

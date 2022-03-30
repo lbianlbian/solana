@@ -112,7 +112,9 @@ async function sayHello(){
 
 	var transaction = new solanaWeb3.Transaction();
 	transaction.add(instruction);
-	
+	transaction.feePayer = globalKey;
+	let blockhashObj = await connection.getRecentBlockhash();
+	transaction.recentBlockhash = await blockhashObj.blockhash;
 	var signed = await globalProvider.signTransaction(transaction);
 	var signature = await connection.sendRawTransaction(signed.serialize());
 	await connection.confirmTransaction(signature);

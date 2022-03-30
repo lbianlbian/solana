@@ -91,7 +91,9 @@ async function createAcc(){
 			programId: programID,
 		}),
 	);
-	
+	transaction.feePayer = globalKey;
+	var blockhashObj = await connection.getRecentBlockhash();
+	transaction.recentBlockhash = await blockhashObj.blockhash;
 	var signed = await globalProvider.signTransaction(transaction);
 	var signature = await connection.sendRawTransaction(signed.serialize());
 	

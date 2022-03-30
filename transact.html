@@ -92,7 +92,7 @@ async function createAcc(){
 		}),
 	);
 	
-	var signed = await globalprovider.signTransaction(transaction);
+	var signed = await globalProvider.signTransaction(transaction);
 	var signature = await connection.sendRawTransaction(signed.serialize());
 	
 	await connection.confirmTransaction();
@@ -106,10 +106,12 @@ async function sayHello(){
 		data: Buffer.alloc(0),
 	});
 
-	await connection.sendTransaction(
-		new Transaction().add(instruction),
-		[globalProvider],
-	);
+	var transaction = new solanaWeb3.Transaction();
+	transaction.add(instruction);
+	
+	var signed = await globalProvider.signTransaction(transaction);
+	var signature = await connection.sendRawTransaction(signed.serialize());
+	await connection.confirmTransaction(signature);
 }
 
 async function seeHellos(){

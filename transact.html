@@ -92,7 +92,7 @@ async function createAcc(){
 		}),
 	);
 
-	await connection.sendAndConfirmTransaction(connection, transaction, [globalProvider]);
+	await connection.sendTransaction(transaction, [globalProvider]);
 
 }
 
@@ -103,16 +103,16 @@ async function sayHello(){
 		data: Buffer.alloc(0),
 	});
 
-	await connection.sendAndConfirmTransaction(
-		connection,
+	await connection.sendTransaction(
 		new Transaction().add(instruction),
 		[globalProvider],
 	);
 }
 
 async function seeHellos(){
-
-	
+	var checkAccStr = document.getElementById("checkAcc").value;
+	var checkAcc = new solanaWeb3.PublicKey(checkAccStr);
+	var accInfo = await connection.getAccountInfo(checkAcc);
 	
 }
 </script>

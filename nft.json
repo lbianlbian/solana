@@ -1,9 +1,9 @@
 {
-  "name": "Biz NFT test",
+  "name": "Biz NFT test number 2",
   "symbol": "Biz",
   "description": "NFTs for businesses and customer loyalty programs",
   "seller_fee_basis_points": 700, 
-  "image": "https://imgur.com/t/travel/ktmdnA6https://drive.google.com/uc?export=view&id=1TZ0v1xBYxSzVcFmpsgxyl3UVxhnEWvQ_", 
+  "image": "https://drive.google.com/uc?export=view&id=1TZ0v1xBYxSzVcFmpsgxyl3UVxhnEWvQ_", 
   "attributes": [
     {
       "trait_type": "company",

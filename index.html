@@ -37,7 +37,7 @@ function seeNFTs(wallet_address){
 	
 }
 	
-function signMessage(){
+async function signMessage(){
 	const message = `To avoid digital dognappers,
     sign below to authenticate with CryptoCorgis`;
 const encodedMessage = new TextEncoder().encode(message);
@@ -91,7 +91,7 @@ function phantom_connect() {
 </script>
 <button onclick = "phantom_connect()"> Connect Phantom Wallet </button>
 <h1 id = "displayAddress"> </h1>
-<div id = "displayNFTs"> </div>s
+<div id = "displayNFTs"> </div>
 	<button onclick = "signMessage()"> Sign message </button>
 </body>
 </html>

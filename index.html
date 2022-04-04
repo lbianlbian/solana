@@ -36,6 +36,13 @@ function seeNFTs(wallet_address){
 	}	
 	
 }
+	
+function signMessage(){
+	const message = `To avoid digital dognappers,
+    sign below to authenticate with CryptoCorgis`;
+const encodedMessage = new TextEncoder().encode(message);
+const signedMessage = await window.solana.signMessage(encodedMessage, "utf8");
+}
 
 // Connect Phantom
 function phantom_connect() {
@@ -85,5 +92,6 @@ function phantom_connect() {
 <button onclick = "phantom_connect()"> Connect Phantom Wallet </button>
 <h1 id = "displayAddress"> </h1>
 <div id = "displayNFTs"> </div>s
+	<button onclick = "signMessage()"> Sign message </button>
 </body>
 </html>

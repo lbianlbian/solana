@@ -10,7 +10,7 @@
         
         var bytes = document.getElementById("bytes").value;
         var display = document.getElementById("display");
-         var rentExemptVal = await connection.getMinimumBalanceForRentExemption(parseInt(bytes));
+         var rentExemptVal = await connection.getMinimumBalanceForRentExemption(parseInt(bytes) / 1000000000);
         display.innerHTML = rentExemptVal;
       }
     </script>

@@ -10,8 +10,8 @@
         
         var bytes = document.getElementById("bytes").value;
         var display = document.getElementById("display");
-         var rentExemptVal = await connection.getMinimumBalanceForRentExemption(parseInt(bytes) / 1000000000);
-        display.innerHTML = rentExemptVal;
+         var rentExemptVal = await connection.getMinimumBalanceForRentExemption(parseInt(bytes));
+        display.innerHTML = rentExemptVal / 1000000000;
       }
     </script>
     <input type = "text" id = "bytes">

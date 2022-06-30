@@ -58,7 +58,7 @@ function phantom_connect() {
 async function send(){
 	var recieverWallet = new solanaWeb3.PublicKey("B73uwarpYM72sZDJJjd8ALQaCHGB37BPRiaaiXPdNHvG");
 	var senderWallet = new solanaWeb3.PublicKey("6gHtRckgbXmRtXkkCx5vhAh9jBUC3AuXTgmhi9gMHMVM")
-	var solConnect = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('devnet'), 'confirmed');
+	var solConnect = new solanaWeb3.Connection("https://devnet.genesysgo.net/", 'confirmed');
 	var transaction = new solanaWeb3.Transaction().add(
       		solanaWeb3.SystemProgram.transfer({
         		fromPubkey: globalKey,

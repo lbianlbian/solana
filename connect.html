@@ -79,7 +79,7 @@ async function send(){
     	// The signature is generated
     	let signature = await solConnect.sendRawTransaction(signed.serialize());
     	// Confirm whether the transaction went through or not
-	signature = bs58.encode(signature);
+	//signature = bs58.encode(signature);
     	await solConnect.confirmTransaction(signature);
 
 	    console.log("Signature: ", signature);
